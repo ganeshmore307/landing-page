@@ -3,10 +3,10 @@ Theme Name: 13Xplay
 Theme URI: https://13xplay.upscaleera.com/
 Description: Elementor-ready 13Xplay child theme built on the Nuts parent theme for a premium responsive ad landing page.
 Author: 13Xplay
-Version: 1.0.0
+Version: 1.2.0
 Text Domain: 13xplay
 Template: nuts
 */
 
-html, body { background:#03090d; }
+html, body { background:#02090d; }
 body { margin:0; }
