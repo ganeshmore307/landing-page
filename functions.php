@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'X13PLAY_THEME_VERSION', '1.1.0' );
+define( 'X13PLAY_THEME_VERSION', '1.2.0' );
 
 function x13play_theme_setup() {
     add_theme_support( 'title-tag' );
