@@ -81,7 +81,6 @@ function x13play_seed_home_elementor_page() {
     $existing_data  = trim( (string) get_post_meta( $page_id, '_elementor_data', true ) );
     $has_layout     = $existing_data && '[]' !== $existing_data && '{}' !== $existing_data;
 
-    // Never overwrite real Elementor work after the first successful seed.
     if ( $already_seeded || $has_layout ) {
         return;
     }
@@ -91,7 +90,9 @@ function x13play_seed_home_elementor_page() {
             'id'         => 'x13home1',
             'elType'     => 'widget',
             'widgetType' => '13xplay_landing_page',
-            'settings'   => [],
+            'settings'   => [
+                'logo' => [ 'id' => '', 'url' => '' ],
+            ],
             'elements'   => [],
         ],
     ];
