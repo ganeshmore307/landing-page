@@ -1,0 +1,1 @@
+13Xplay theme assets. The default logo file is added as assets/13xplay-logo.webp; replace it later from Elementor if needed.
