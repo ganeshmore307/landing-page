@@ -78,10 +78,11 @@ function x13play_seed_home_elementor_page() {
     }
 
     $already_seeded = get_post_meta( $page_id, '_x13play_landing_seeded', true );
-    $existing_data  = get_post_meta( $page_id, '_elementor_data', true );
+    $existing_data  = trim( (string) get_post_meta( $page_id, '_elementor_data', true ) );
+    $has_layout     = $existing_data && '[]' !== $existing_data && '{}' !== $existing_data;
 
-    // Never overwrite Elementor work after the first successful seed.
-    if ( $already_seeded || ! empty( $existing_data ) ) {
+    // Never overwrite real Elementor work after the first successful seed.
+    if ( $already_seeded || $has_layout ) {
         return;
     }
 
