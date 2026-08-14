@@ -9,6 +9,12 @@ add_action( 'wp_head', function() {
     if ( ! is_front_page() && ! is_page( 28 ) ) { return; }
     ?>
     <style id="x13-mobile-box-cleanup">
+    /* Keep the 10% EXTRA badge clean on both desktop and mobile. */
+    .x13-bonus b,
+    .x13-mobile-bonus b{
+      display:none!important;
+    }
+
     @media (max-width:767px){
       /* Cleaner mobile header typography and spacing. */
       .x13-header-row{
@@ -155,7 +161,6 @@ add_action( 'wp_head', function() {
       }
       .x13-mobile-bonus strong{font-size:9.7vw!important}
       .x13-mobile-bonus span{font-size:3.6vw!important}
-      .x13-mobile-bonus b{font-size:3vw!important;padding:1.05vw 4vw!important}
 
       /* CTA copy: prevent cramped poster-style words from touching. */
       .x13-cta-kicker{
