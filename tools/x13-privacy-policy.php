@@ -1,19 +1,13 @@
 <?php
 /**
  * 13XPlay Privacy Policy page + footer link.
- * Creates an editable WordPress page using only the policy text supplied by the site owner.
+ * Creates/updates an editable WordPress page using only the policy text supplied by the site owner.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 add_action( 'init', function() {
     $slug = 'privacy-policy';
-    $existing = get_page_by_path( $slug, OBJECT, 'page' );
-
-    if ( $existing ) {
-        update_option( 'wp_page_for_privacy_policy', (int) $existing->ID );
-        return;
-    }
-
+    $seed_version = '1';
     $content = <<<HTML
 <p>At 13XPlay, we respect your privacy and are committed to protecting the personal information that you share with us.</p>
 
@@ -28,17 +22,42 @@ add_action( 'init', function() {
 <p>Our website may provide information about our services and allow visitors to contact our support team through WhatsApp or other communication channels.</p>
 HTML;
 
-    $page_id = wp_insert_post( [
-        'post_title'   => 'Privacy Policy',
-        'post_name'    => $slug,
-        'post_status'  => 'publish',
-        'post_type'    => 'page',
-        'post_content' => $content,
-    ] );
+    $page = get_page_by_path( $slug, OBJECT, 'page' );
 
-    if ( ! is_wp_error( $page_id ) && $page_id ) {
+    if ( $page ) {
+        $page_id = (int) $page->ID;
+
+        /* Seed the supplied text once, including over the old WordPress draft page.
+         * After v1 is seeded, future manual edits in WordPress are preserved.
+         */
+        if ( get_option( 'x13_privacy_policy_seed_version' ) !== $seed_version ) {
+            wp_update_post( [
+                'ID'           => $page_id,
+                'post_title'   => 'Privacy Policy',
+                'post_name'    => $slug,
+                'post_status'  => 'publish',
+                'post_content' => $content,
+            ] );
+            update_option( 'x13_privacy_policy_seed_version', $seed_version );
+            flush_rewrite_rules( false );
+        }
+    } else {
+        $page_id = wp_insert_post( [
+            'post_title'   => 'Privacy Policy',
+            'post_name'    => $slug,
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_content' => $content,
+        ] );
+
+        if ( ! is_wp_error( $page_id ) && $page_id ) {
+            update_option( 'x13_privacy_policy_seed_version', $seed_version );
+            flush_rewrite_rules( false );
+        }
+    }
+
+    if ( ! empty( $page_id ) && ! is_wp_error( $page_id ) ) {
         update_option( 'wp_page_for_privacy_policy', (int) $page_id );
-        flush_rewrite_rules( false );
     }
 }, 30 );
 
