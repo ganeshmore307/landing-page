@@ -1,8 +1,8 @@
 <?php
 /**
- * 13XPlay header WhatsApp hover correction.
- * Applies #15C93D only to the HEADER WhatsApp button.
- * Does not override the bottom/main WhatsApp CTA.
+ * 13XPlay WhatsApp hover corrections.
+ * Header WhatsApp hover: #15C93D.
+ * Sticky/main WhatsApp hover: black.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -16,6 +16,15 @@ add_action( 'wp_footer', function() {
         color:#15C93D!important;
         fill:#15C93D!important;
         stroke:#15C93D!important;
+      }
+
+      .x13-main-wa:hover,
+      .x13-main-wa:hover *,
+      .x13-main-wa:focus-visible,
+      .x13-main-wa:focus-visible * {
+        color:#000000!important;
+        fill:#000000!important;
+        stroke:#000000!important;
       }
     </style>
     <?php
