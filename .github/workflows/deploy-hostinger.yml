@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy 13Xplay theme files to Hostinger
+      - name: Deploy 13Xplay theme files to real wp-content folder
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
-          server-dir: /public_html/wp-content/themes/13xplay/
+          server-dir: /wp-content/themes/13xplay/
           exclude: |
             **/.git*
             **/.git*/**
@@ -36,12 +36,12 @@ jobs:
             tools/**
             README.md
 
-      - name: Upload standalone Elementor repair to public_html
+      - name: Upload standalone Elementor repair to website root
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
             --upload-file "tools/x13-elementor-repair.php" \
-            "ftp://${FTP_SERVER}/public_html/x13-elementor-repair.php"
+            "ftp://${FTP_SERVER}/x13-elementor-repair.php"
 
       - name: Execute and verify Elementor repair
         run: |
@@ -56,5 +56,5 @@ jobs:
         run: |
           curl --silent --show-error \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --quote "DELE public_html/x13-elementor-repair.php" \
+            --quote "DELE x13-elementor-repair.php" \
             "ftp://${FTP_SERVER}/" > /dev/null || true
