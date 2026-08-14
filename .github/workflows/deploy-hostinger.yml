@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy 13Xplay theme files to real wp-content folder
+      - name: Deploy 13Xplay theme files to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -36,25 +36,25 @@ jobs:
             tools/**
             README.md
 
-      - name: Upload standalone Elementor repair to website root
+      - name: Upload temporary Elementor MU repair
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --upload-file "tools/x13-elementor-repair.php" \
-            "ftp://${FTP_SERVER}/x13-elementor-repair.php"
+            --upload-file "tools/x13-elementor-mu-repair.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-elementor-repair.php"
 
-      - name: Execute and verify Elementor repair
+      - name: Execute and verify Elementor document repair
         run: |
           sleep 2
-          echo "Standalone Elementor repair result:"
+          echo "Elementor repair verification:"
           curl --fail --silent --show-error --location --retry 3 --max-time 30 \
-            "https://13xplay.upscaleera.com/x13-elementor-repair.php?token=x13-repair-28-20260814"
+            "https://13xplay.upscaleera.com/?x13_force_elementor_repair=1&cb=${GITHUB_SHA}"
           echo
 
-      - name: Remove standalone repair file from Hostinger
+      - name: Remove temporary Elementor MU repair
         if: always()
         run: |
           curl --silent --show-error \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --quote "DELE x13-elementor-repair.php" \
+            --quote "DELE wp-content/mu-plugins/x13-elementor-repair.php" \
             "ftp://${FTP_SERVER}/" > /dev/null || true
