@@ -8,6 +8,7 @@
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="<?php echo esc_url( get_stylesheet_uri() ); ?>?ver=4.0.0">
 <?php wp_head(); ?>
 </head>
 <body <?php body_class( 'x13-standalone' ); ?>>
