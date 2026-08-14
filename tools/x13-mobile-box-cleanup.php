@@ -46,6 +46,11 @@ add_action( 'wp_head', function() {
         bottom:auto!important;
         height:92vw!important;
       }
+      /* Nudge only the mobile artwork slightly right/down; keep all text/cards fixed. */
+      .x13-mobile-art img{
+        transform:translate(2vw,1.8vw) scale(1.04)!important;
+        transform-origin:center center!important;
+      }
 
       /* Move the complete mobile poster content down together. */
       .x13-eyebrow{
