@@ -97,6 +97,13 @@ jobs:
             --upload-file "tools/x13-mobile-box-cleanup.php" \
             "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-mobile-box-cleanup.php"
 
+      - name: Upload mobile GET ID card fix
+        run: |
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file "tools/x13-mobile-id-card-fix.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-mobile-id-card-fix.php"
+
       - name: Upload privacy policy page
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
@@ -108,10 +115,10 @@ jobs:
         run: |
           sleep 3
           HTML="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}")"
-          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish|x13-mobile-poster-v2|x13-trust-icon-size|x13-desktop-bonus-polish|x13-mobile-box-cleanup|data-x13-footer-menu-controls|Privacy Policy" >/dev/null
+          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish|x13-mobile-poster-v2|x13-trust-icon-size|x13-desktop-bonus-polish|x13-mobile-box-cleanup|x13-mobile-id-card-fix|data-x13-footer-menu-controls|Privacy Policy" >/dev/null
           POLICY="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/privacy-policy/?cb=${GITHUB_SHA}")"
           echo "$POLICY" | grep -F "At 13XPlay, we respect your privacy" >/dev/null
           echo "$POLICY" | grep -F "1. About 13XPlay" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-logo.webp" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-hero.webp" >/dev/null
-          echo "13Xplay landing, editable footer menu, and Privacy Policy deployed successfully."
+          echo "13Xplay landing, mobile ID card fix, editable footer menu, and Privacy Policy deployed successfully."
