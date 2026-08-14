@@ -1,4 +1,4 @@
-name: Repair 13Xplay Elementor Home
+name: Build 13Xplay Elementor Landing Page
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - 13xplay-theme-sync
 
 concurrency:
-  group: repair-13xplay-elementor
+  group: build-13xplay-elementor
   cancel-in-progress: true
 
 jobs:
-  repair:
+  build:
     runs-on: ubuntu-latest
     env:
       FTP_SERVER: ${{ secrets.FTP_SERVER }}
@@ -20,25 +20,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Upload temporary Elementor MU repair
+      - name: Upload temporary Elementor layout builder
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --upload-file "tools/x13-elementor-mu-repair.php" \
-            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-elementor-repair.php"
+            --upload-file "tools/x13-build-reference-layout.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-build-reference-layout.php"
 
-      - name: Execute and verify Elementor document repair
+      - name: Build and verify Elementor landing page
         run: |
           sleep 2
-          echo "Elementor repair verification:"
-          curl --fail --silent --show-error --location --retry 3 --max-time 30 \
-            "https://13xplay.upscaleera.com/?x13_force_elementor_repair=1&cb=${GITHUB_SHA}"
+          echo "13Xplay Elementor layout result:"
+          curl --fail --silent --show-error --location --retry 3 --max-time 60 \
+            "https://13xplay.upscaleera.com/?x13_build_reference=1&cb=${GITHUB_SHA}"
           echo
 
-      - name: Remove temporary Elementor MU repair
+      - name: Verify live Home contains new layout markers
+        run: |
+          sleep 2
+          curl --fail --silent --show-error --location --retry 3 --max-time 60 \
+            "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}" \
+            | grep -E "x13-ref-header|x13-main-title|x13-main-whatsapp|x13-ref-footer" >/dev/null
+          echo "Live Home contains header, hero CTA and footer markers."
+
+      - name: Remove temporary Elementor layout builder
         if: always()
         run: |
           curl --silent --show-error \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --quote "DELE wp-content/mu-plugins/x13-elementor-repair.php" \
+            --quote "DELE wp-content/mu-plugins/x13-build-reference-layout.php" \
             "ftp://${FTP_SERVER}/" > /dev/null || true
