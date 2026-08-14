@@ -2,6 +2,7 @@
 /**
  * Final mobile GET ID card correction.
  * Printed in the footer so it loads after the widget/mobile styles and cannot be overridden.
+ * Deployment retry marker: 2026-08-14.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
