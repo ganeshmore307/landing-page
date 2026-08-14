@@ -1,7 +1,8 @@
 <?php
 /**
  * Desktop-only polish for the 13Xplay 10% EXTRA BONUS badge.
- * Keeps mobile layout untouched.
+ * Keeps the original desktop position/footprint and only cleans the visual styling.
+ * Mobile layout stays untouched.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -12,18 +13,19 @@ add_action( 'wp_head', function() {
     @media (min-width: 768px) {
       .x13-art-side{position:relative!important}
 
+      /* IMPORTANT: preserve the original approved desktop position. */
       .x13-bonus{
         position:absolute!important;
-        left:-44px!important;
-        right:auto!important;
-        bottom:36px!important;
+        right:0!important;
+        left:auto!important;
+        bottom:26px!important;
         top:auto!important;
-        width:208px!important;
-        height:208px!important;
-        min-width:208px!important;
-        min-height:208px!important;
-        padding:30px 18px 26px!important;
+        width:205px!important;
+        height:205px!important;
+        min-width:205px!important;
+        min-height:205px!important;
         margin:0!important;
+        padding:28px 18px 25px!important;
         display:flex!important;
         flex-direction:column!important;
         align-items:center!important;
@@ -32,15 +34,10 @@ add_action( 'wp_head', function() {
         text-align:center!important;
         border-radius:50%!important;
         border:3px solid #FFD83D!important;
-        outline:1px solid rgba(255,216,61,.42)!important;
-        outline-offset:6px!important;
-        background:
-          radial-gradient(circle at 50% 38%,rgba(115,86,9,.78) 0%,rgba(50,39,7,.96) 31%,#171305 58%,#050604 82%)!important;
-        box-shadow:
-          0 0 0 7px rgba(74,55,4,.78),
-          0 0 0 10px rgba(255,216,61,.52),
-          0 0 34px rgba(255,203,28,.34),
-          inset 0 0 34px rgba(255,216,61,.10)!important;
+        outline:1px solid rgba(255,216,61,.40)!important;
+        outline-offset:5px!important;
+        background:radial-gradient(circle at 50% 38%,rgba(108,82,9,.78) 0%,rgba(48,37,7,.96) 32%,#171305 58%,#050604 82%)!important;
+        box-shadow:0 0 0 6px rgba(72,54,5,.72),0 0 0 9px rgba(255,216,61,.48),0 0 30px rgba(255,203,28,.32),inset 0 0 30px rgba(255,216,61,.09)!important;
         overflow:visible!important;
         z-index:7!important;
       }
@@ -50,35 +47,35 @@ add_action( 'wp_head', function() {
         position:absolute;
         inset:9px;
         border-radius:50%;
-        border:1px solid rgba(255,233,126,.48);
+        border:1px solid rgba(255,235,135,.42);
         pointer-events:none;
       }
 
       .x13-bonus .x13-stars{
         position:absolute!important;
-        top:24px!important;
+        top:23px!important;
         left:50%!important;
         transform:translateX(-50%)!important;
         width:100%!important;
         margin:0!important;
         color:#FFE56A!important;
-        font-size:12px!important;
+        font-size:11px!important;
         line-height:1!important;
-        letter-spacing:5px!important;
+        letter-spacing:4px!important;
         white-space:nowrap!important;
       }
 
       .x13-bonus strong{
         display:block!important;
-        margin:15px 0 0!important;
+        margin:14px 0 0!important;
         padding:0!important;
         color:#FFD83D!important;
-        font-size:68px!important;
+        font-size:66px!important;
         line-height:.88!important;
         font-weight:1000!important;
         letter-spacing:-3px!important;
         white-space:nowrap!important;
-        text-shadow:0 2px 12px rgba(255,216,61,.34)!important;
+        text-shadow:0 2px 11px rgba(255,216,61,.32)!important;
       }
 
       .x13-bonus span{
@@ -88,10 +85,10 @@ add_action( 'wp_head', function() {
         width:auto!important;
         max-width:none!important;
         color:#FFD83D!important;
-        font-size:24px!important;
+        font-size:23px!important;
         line-height:1!important;
         font-weight:1000!important;
-        letter-spacing:.4px!important;
+        letter-spacing:.35px!important;
         white-space:nowrap!important;
         word-break:normal!important;
         overflow-wrap:normal!important;
@@ -101,26 +98,26 @@ add_action( 'wp_head', function() {
         position:absolute!important;
         left:50%!important;
         right:auto!important;
-        bottom:-15px!important;
+        bottom:-13px!important;
         transform:translateX(-50%)!important;
         display:flex!important;
         align-items:center!important;
         justify-content:center!important;
-        width:150px!important;
-        min-width:150px!important;
-        height:43px!important;
+        width:146px!important;
+        min-width:146px!important;
+        height:41px!important;
         margin:0!important;
-        padding:0 18px!important;
-        border:2px solid rgba(255,229,97,.78)!important;
+        padding:0 16px!important;
+        border:2px solid rgba(255,229,97,.74)!important;
         border-radius:999px!important;
         background:linear-gradient(180deg,#22e96c 0%,#079d3c 100%)!important;
         color:#fff!important;
-        font-size:20px!important;
+        font-size:19px!important;
         line-height:1!important;
         font-weight:1000!important;
-        letter-spacing:.6px!important;
+        letter-spacing:.55px!important;
         white-space:nowrap!important;
-        box-shadow:0 6px 18px rgba(5,181,67,.36),inset 0 1px 0 rgba(255,255,255,.28)!important;
+        box-shadow:0 6px 16px rgba(5,181,67,.34),inset 0 1px 0 rgba(255,255,255,.26)!important;
       }
     }
     </style>
