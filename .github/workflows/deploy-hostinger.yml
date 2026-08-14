@@ -24,11 +24,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
-          server-dir: /wp-content/themes/13xplay/
+          server-dir: /public_html/wp-content/themes/13xplay/
           exclude: |
             **/.git*
             **/.git*/**
             **/.github/**
             README.md
-
-# Triggered after FTP credential correction.
