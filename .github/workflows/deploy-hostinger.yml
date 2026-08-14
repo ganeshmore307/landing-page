@@ -30,3 +30,8 @@ jobs:
             **/.git*/**
             **/.github/**
             README.md
+
+      - name: Trigger WordPress Elementor repair
+        run: |
+          sleep 2
+          curl --fail --silent --show-error --location --retry 3 --max-time 30 "https://13xplay.upscaleera.com/?x13-deploy-trigger=${GITHUB_SHA}" > /dev/null
