@@ -7,7 +7,7 @@ on:
 
 concurrency:
   group: deploy-13xplay-controlled-editor
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -62,35 +62,11 @@ jobs:
             --upload-file "tools/x13-mobile-reference-polish.php" \
             "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-mobile-reference-polish.php"
 
-      - name: Upload one-time Home seeder
-        run: |
-          curl --fail --silent --show-error --ftp-create-dirs \
-            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --upload-file "tools/x13-seed-controlled-editor.php" \
-            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-seed-controlled-editor.php"
-
-      - name: Seed Home 28 with controlled widget and reference trust points
-        run: |
-          sleep 2
-          echo "Controlled editor seed result:"
-          curl --fail --silent --show-error --location --retry 3 --max-time 60 \
-            "https://13xplay.upscaleera.com/?x13_seed_controlled=1&cb=${GITHUB_SHA}"
-          echo
-
       - name: Verify premium layout and mobile polish live
         run: |
-          sleep 2
+          sleep 3
           HTML="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}")"
           echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish" >/dev/null
-          echo "$HTML" | grep -E "FAST|DELIVERY|100%|SECURE|24/7|SUPPORT|BEST|SERVICE" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-logo.webp" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-hero.webp" >/dev/null
-          echo "Desktop preserved, mobile reference polish and trust points verified live."
-
-      - name: Remove one-time seeder only
-        if: always()
-        run: |
-          curl --silent --show-error \
-            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --quote "DELE wp-content/mu-plugins/x13-seed-controlled-editor.php" \
-            "ftp://${FTP_SERVER}/" > /dev/null || true
+          echo "13Xplay landing deployed without overwriting Elementor content."
