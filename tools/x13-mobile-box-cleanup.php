@@ -10,6 +10,31 @@ add_action( 'wp_head', function() {
     ?>
     <style id="x13-mobile-box-cleanup">
     @media (max-width:767px){
+      /* Cleaner mobile header typography and spacing. */
+      .x13-header-row{
+        min-height:64px!important;
+        max-height:none!important;
+        grid-template-columns:43% 57%!important;
+        column-gap:10px!important;
+        padding:8px 14px!important;
+      }
+      .x13-logo-wrap img{
+        width:128px!important;
+        max-width:100%!important;
+        max-height:48px!important;
+      }
+      .x13-mobile-welcome{
+        max-width:170px!important;
+        margin-left:auto!important;
+        padding-left:8px!important;
+        font-size:12.5px!important;
+        line-height:1.35!important;
+        letter-spacing:.35px!important;
+        word-spacing:1px!important;
+        font-weight:800!important;
+        white-space:normal!important;
+      }
+
       /* Add breathing room below the header so the poster does not start too high. */
       .x13-hero-grid{
         min-height:96vw!important;
@@ -23,9 +48,19 @@ add_action( 'wp_head', function() {
       }
 
       /* Move the complete mobile poster content down together. */
-      .x13-eyebrow{top:8.4vw!important}
-      .x13-copy h1{top:14.5vw!important}
-      .x13-subtitle{top:50.5vw!important}
+      .x13-eyebrow{
+        top:9vw!important;
+        left:4.4vw!important;
+        width:54vw!important;
+        font-size:2.8vw!important;
+        line-height:1.35!important;
+        letter-spacing:.12vw!important;
+        word-spacing:.3vw!important;
+        font-weight:800!important;
+        white-space:nowrap!important;
+      }
+      .x13-copy h1{top:15.5vw!important}
+      .x13-subtitle{top:51.5vw!important}
 
       /* Give the left cards more usable room without touching desktop. */
       .x13-mobile-id-card,
@@ -141,6 +176,10 @@ add_action( 'wp_head', function() {
     }
 
     @media (max-width:390px){
+      .x13-header-row{grid-template-columns:42% 58%!important;padding:8px 12px!important}
+      .x13-logo-wrap img{width:120px!important}
+      .x13-mobile-welcome{font-size:11.8px!important;line-height:1.35!important;letter-spacing:.3px!important;max-width:158px!important}
+      .x13-eyebrow{font-size:2.7vw!important;width:56vw!important}
       .x13-mobile-id-card,
       .x13-mobile-trust-card{width:50vw!important;max-width:50vw!important}
       .x13-mobile-id-card small{font-size:2.6vw!important}
@@ -151,6 +190,10 @@ add_action( 'wp_head', function() {
     }
 
     @media (max-width:350px){
+      .x13-header-row{min-height:58px!important}
+      .x13-logo-wrap img{width:110px!important}
+      .x13-mobile-welcome{font-size:11px!important;max-width:145px!important;letter-spacing:.22px!important}
+      .x13-eyebrow{font-size:2.6vw!important;width:58vw!important}
       .x13-mobile-id-card,
       .x13-mobile-trust-card{width:51vw!important;max-width:51vw!important}
       .x13-mobile-id-card small{font-size:2.55vw!important}
