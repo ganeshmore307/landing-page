@@ -69,11 +69,18 @@ jobs:
             --upload-file "tools/x13-trust-icon-size.php" \
             "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-trust-icon-size.php"
 
-      - name: Verify premium layout and trust icon override live
+      - name: Upload desktop bonus badge polish
+        run: |
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file "tools/x13-desktop-bonus-polish.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-desktop-bonus-polish.php"
+
+      - name: Verify premium layout and style overrides live
         run: |
           sleep 3
           HTML="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}")"
-          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish|x13-trust-icon-size" >/dev/null
+          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish|x13-trust-icon-size|x13-desktop-bonus-polish" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-logo.webp" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-hero.webp" >/dev/null
-          echo "13Xplay landing deployed with larger trust strip icons."
+          echo "13Xplay landing deployed with clean desktop bonus badge and larger trust icons."
