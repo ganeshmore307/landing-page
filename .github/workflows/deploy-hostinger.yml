@@ -1,4 +1,4 @@
-name: Build 13Xplay Elementor Landing Page V2
+name: Deploy 13Xplay Controlled Elementor Landing
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - 13xplay-theme-sync
 
 concurrency:
-  group: build-13xplay-elementor-v2
-  cancel-in-progress: true
+  group: deploy-13xplay-controlled-editor
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
           test -s /tmp/x13-assets/13xplay-logo.webp
           test -s /tmp/x13-assets/13xplay-hero.webp
 
-      - name: Upload branded artwork to WordPress uploads
+      - name: Upload branded artwork
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
@@ -48,34 +48,41 @@ jobs:
             --upload-file /tmp/x13-assets/13xplay-hero.webp \
             "ftp://${FTP_SERVER}/wp-content/uploads/13xplay-assets/13xplay-hero.webp"
 
-      - name: Upload temporary Elementor V2 polish
+      - name: Upload persistent controlled Elementor editor
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --upload-file "tools/x13-polish-reference-v2.php" \
-            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-polish-reference-v2.php"
+            --upload-file "tools/x13-controlled-elementor-widget.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-controlled-elementor-widget.php"
 
-      - name: Apply V2 Elementor design
+      - name: Upload one-time Home seeder
+        run: |
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file "tools/x13-seed-controlled-editor.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-seed-controlled-editor.php"
+
+      - name: Seed Home 28 with one controlled widget
         run: |
           sleep 2
-          echo "13Xplay V2 result:"
+          echo "Controlled editor seed result:"
           curl --fail --silent --show-error --location --retry 3 --max-time 60 \
-            "https://13xplay.upscaleera.com/?x13_polish_v2=1&cb=${GITHUB_SHA}"
+            "https://13xplay.upscaleera.com/?x13_seed_controlled=1&cb=${GITHUB_SHA}"
           echo
 
-      - name: Verify live V2 markers and artwork
+      - name: Verify fixed premium layout live
         run: |
           sleep 2
           HTML="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}")"
-          echo "$HTML" | grep -E "x13-v2-logo|x13-v2-art|x13-v2-ready|x13-v2-bottom-strip" >/dev/null
+          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-logo.webp" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-hero.webp" >/dev/null
-          echo "Reference V2 layout and branded assets verified live."
+          echo "Fixed 13Xplay premium landing and assets verified live."
 
-      - name: Remove temporary Elementor polish file
+      - name: Remove one-time seeder only
         if: always()
         run: |
           curl --silent --show-error \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --quote "DELE wp-content/mu-plugins/x13-polish-reference-v2.php" \
+            --quote "DELE wp-content/mu-plugins/x13-seed-controlled-editor.php" \
             "ftp://${FTP_SERVER}/" > /dev/null || true
