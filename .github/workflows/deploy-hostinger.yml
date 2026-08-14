@@ -35,3 +35,9 @@ jobs:
         run: |
           sleep 2
           curl --fail --silent --show-error --location --retry 3 --max-time 30 "https://13xplay.upscaleera.com/?x13-deploy-trigger=${GITHUB_SHA}" > /dev/null
+
+      - name: Verify Home Elementor data
+        run: |
+          echo "Elementor Home diagnostic:"
+          curl --fail --silent --show-error --location --retry 3 --max-time 30 "https://13xplay.upscaleera.com/?x13_diag=elementor"
+          echo
