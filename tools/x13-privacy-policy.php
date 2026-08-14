@@ -38,6 +38,7 @@ HTML;
 
     if ( ! is_wp_error( $page_id ) && $page_id ) {
         update_option( 'wp_page_for_privacy_policy', (int) $page_id );
+        flush_rewrite_rules( false );
     }
 }, 30 );
 
@@ -60,12 +61,17 @@ add_action( 'wp_footer', function() {
     <?php
 }, 99 );
 
-/* Clean standalone presentation for the Privacy Policy page. */
+/* Clean standalone presentation for the Privacy Policy page.
+ * Resolve the path directly so it works even if the current theme/permalink rules return 404.
+ */
 add_action( 'template_redirect', function() {
-    if ( ! is_page( 'privacy-policy' ) ) { return; }
+    $request_path = parse_url( isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '', PHP_URL_PATH );
+    $request_path = '/' . trim( (string) $request_path, '/' ) . '/';
 
-    $post = get_queried_object();
-    if ( ! $post || empty( $post->ID ) ) { return; }
+    if ( '/privacy-policy/' !== $request_path && ! is_page( 'privacy-policy' ) ) { return; }
+
+    $post = get_page_by_path( 'privacy-policy', OBJECT, 'page' );
+    if ( ! $post ) { return; }
 
     $title   = get_the_title( $post );
     $content = apply_filters( 'the_content', $post->post_content );
@@ -93,4 +99,4 @@ html,body{margin:0;padding:0;background:#020707;color:#eef6f3;font-family:Arial,
 </html>
     <?php
     exit;
-}, 1 );
+}, 0 );
