@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#02070a">
 <title>13Xplay</title>
+<!-- deploy-trigger: 2026-08-14 -->
 <style>
 :root{--bg:#02070a;--teal:#18e0b0;--green:#16d86d;--gold:#ffc52b;--white:#fff;--muted:#aab6bc}
 *{box-sizing:border-box}
