@@ -1,3 +1,39 @@
+<?php
+/**
+ * Elementor editor compatibility mode.
+ * The live website below remains the direct 13Xplay front-page.php design.
+ * When Elementor opens its preview iframe, render the WordPress page document
+ * with normal wp_head/wp_footer hooks so Elementor can initialize correctly.
+ */
+$is_elementor_preview = isset( $_GET['elementor-preview'] );
+
+if ( $is_elementor_preview && function_exists( 'wp_head' ) ) :
+?><!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php
+if ( function_exists( 'wp_body_open' ) ) {
+    wp_body_open();
+}
+
+while ( have_posts() ) {
+    the_post();
+    the_content();
+}
+
+wp_footer();
+?>
+</body>
+</html>
+<?php
+return;
+endif;
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,7 +41,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#02070a">
 <title>13Xplay</title>
-<!-- deploy-trigger: 2026-08-14 -->
 <style>
 :root{--bg:#02070a;--teal:#18e0b0;--green:#16d86d;--gold:#ffc52b;--white:#fff;--muted:#aab6bc}
 *{box-sizing:border-box}
