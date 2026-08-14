@@ -1,8 +1,8 @@
 <?php
 /**
- * Final mobile card correction for 13Xplay.
- * Keeps both poster cards identical in width and replaces the lightning glyph
- * with one pure CSS bolt so emoji/font rendering cannot duplicate or distort it.
+ * Final mobile card + lower poster spacing correction for 13Xplay.
+ * Keeps both poster cards identical in width, uses one pure CSS bolt,
+ * prevents the lower trust/bonus area from being clipped, and cleans the CTA copy.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -10,6 +10,21 @@ add_action( 'wp_footer', function() {
     ?>
     <style id="x13-mobile-id-card-fix-final">
     @media (max-width:767px){
+      /* Give the lower trust card and 10% badge enough poster height.
+         The previous 92vw artwork height clipped their lower edges and made
+         the black CTA strip look like it was overlapping the cards. */
+      .x13-fixed .x13-hero-grid{
+        min-height:104vw!important;
+        height:104vw!important;
+        max-height:520px!important;
+      }
+      .x13-fixed .x13-mobile-art{
+        top:4vw!important;
+        bottom:auto!important;
+        height:100vw!important;
+        overflow:hidden!important;
+      }
+
       /* BOTH MOBILE CARDS: exact same footprint and alignment. */
       .x13-fixed .x13-mobile-id-card,
       .x13-fixed .x13-mobile-trust-card{
@@ -176,6 +191,39 @@ add_action( 'wp_footer', function() {
         line-height:1.08!important;
         white-space:normal!important;
       }
+
+      /* CTA SECTION: clean separation from the poster and more breathing room. */
+      .x13-fixed .x13-cta-block{
+        position:relative!important;
+        z-index:4!important;
+        margin:0!important;
+        padding:6.5vw 4vw 7vw!important;
+        min-height:29vw!important;
+        text-align:center!important;
+        background:linear-gradient(180deg,#010303,#020605)!important;
+        border-top:1px solid rgba(21,217,176,.20)!important;
+        border-bottom:1px solid rgba(21,217,176,.24)!important;
+      }
+      .x13-fixed .x13-cta-kicker{
+        width:80vw!important;
+        max-width:80vw!important;
+        margin:0 auto!important;
+        padding:0!important;
+        font-size:4.35vw!important;
+        line-height:1.14!important;
+        letter-spacing:.04vw!important;
+        text-align:center!important;
+        text-shadow:0 2px 8px rgba(0,0,0,.45)!important;
+      }
+      .x13-fixed .x13-cta-kicker span,
+      .x13-fixed .x13-cta-kicker b{
+        display:block!important;
+        margin:0!important;
+        padding:0!important;
+      }
+      .x13-fixed .x13-cta-kicker span{
+        margin-bottom:1.6vw!important;
+      }
     }
 
     @media (max-width:390px){
@@ -207,6 +255,11 @@ add_action( 'wp_footer', function() {
       .x13-fixed .x13-mobile-trust-card .x13-check{flex-basis:7.8vw!important;font-size:4.8vw!important}
       .x13-fixed .x13-mobile-trust-card small{font-size:2.45vw!important}
       .x13-fixed .x13-mobile-trust-card strong{font-size:2.35vw!important}
+      .x13-fixed .x13-cta-kicker{
+        font-size:4.2vw!important;
+        line-height:1.16!important;
+      }
+      .x13-fixed .x13-cta-kicker span{margin-bottom:1.8vw!important}
     }
 
     @media (max-width:350px){
@@ -221,6 +274,7 @@ add_action( 'wp_footer', function() {
       }
       .x13-fixed .x13-mobile-id-card .x13-fast{display:none!important}
       .x13-fixed .x13-mobile-id-card strong{font-size:4.75vw!important}
+      .x13-fixed .x13-cta-kicker{font-size:4.1vw!important}
     }
     </style>
 
