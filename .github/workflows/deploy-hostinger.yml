@@ -6,7 +6,7 @@ on:
       - 13xplay-theme-sync
 
 concurrency:
-  group: build-13xplay-elementor
+  group: build-13xplay-elementor-v2
   cancel-in-progress: true
 
 jobs:
