@@ -1,12 +1,8 @@
 /*
-Theme Name: 13Xplay
+Theme Name: 13Xplay Direct
 Theme URI: https://13xplay.upscaleera.com/
-Description: Direct theme-rendered 13Xplay responsive landing page built on the Nuts parent theme.
+Description: Minimal WordPress shell for the direct 13Xplay front-page.php landing page.
 Author: 13Xplay
-Version: 2.0.0
+Version: 3.0.0
 Text Domain: 13xplay
-Template: nuts
 */
-
-html, body { background:#02090d; }
-body { margin:0; }
