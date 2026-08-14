@@ -43,10 +43,10 @@ add_action( 'init', function() {
         'cta_kicker_2' => 'JOIN 13XPLAY NOW!',
         'cta_text' => 'WHATSAPP NOW',
         'cta_url' => [ 'url' => 'https://wa.me/917058820881?text=Hi%2013Xplay%2C%20I%20want%20to%20get%20my%20ID.' ],
-        'f1_title' => 'INSTANT', 'f1_sub' => 'WITHDRAWAL',
-        'f2_title' => '24X7', 'f2_sub' => 'CUSTOMER SUPPORT',
-        'f3_title' => 'SECURE', 'f3_sub' => 'TRANSACTIONS',
-        'f4_title' => 'BEST ODDS', 'f4_sub' => '& BIG WINS',
+        'f1_title' => 'FAST', 'f1_sub' => 'DELIVERY',
+        'f2_title' => '100%', 'f2_sub' => 'SECURE',
+        'f3_title' => '24/7', 'f3_sub' => 'SUPPORT',
+        'f4_title' => 'BEST', 'f4_sub' => 'SERVICE',
         'footer_text' => 'Fast ID. Secure support. Simple WhatsApp assistance.',
         'footer_links_heading' => 'QUICK LINKS',
         'footer_support_heading' => '24X7 SUPPORT',
@@ -93,7 +93,7 @@ add_action( 'init', function() {
     update_post_meta( $home_id, '_elementor_data', wp_slash( wp_json_encode( $data ) ) );
     update_post_meta( $home_id, '_elementor_page_settings', [ 'hide_title' => 'yes' ] );
     update_post_meta( $home_id, '_wp_page_template', 'elementor_canvas' );
-    update_post_meta( $home_id, '_x13_layout_version', 'controlled-editor-v1' );
+    update_post_meta( $home_id, '_x13_layout_version', 'controlled-editor-mobile-reference-v2' );
     delete_post_meta( $home_id, '_elementor_css' );
     delete_post_meta( $home_id, '_elementor_element_cache' );
     delete_post_meta( $home_id, '_elementor_page_assets' );
@@ -118,5 +118,6 @@ add_action( 'init', function() {
         'root_elements' => is_array( $decoded ) ? count( $decoded ) : 0,
         'widget_type' => $widget_type,
         'edit_mode' => get_post_meta( $home_id, '_elementor_edit_mode', true ),
+        'trust_points' => [ 'FAST DELIVERY', '100% SECURE', '24/7 SUPPORT', 'BEST SERVICE' ],
     ] );
 }, 1 );
