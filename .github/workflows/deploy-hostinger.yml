@@ -1,4 +1,4 @@
-name: Deploy 13Xplay to Hostinger
+name: Repair 13Xplay Elementor Home
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - 13xplay-theme-sync
 
 concurrency:
-  group: deploy-13xplay-hostinger
+  group: repair-13xplay-elementor
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  repair:
     runs-on: ubuntu-latest
     env:
       FTP_SERVER: ${{ secrets.FTP_SERVER }}
@@ -19,22 +19,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Deploy 13Xplay theme files to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          server-dir: /wp-content/themes/13xplay/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            tools/**
-            README.md
 
       - name: Upload temporary Elementor MU repair
         run: |
