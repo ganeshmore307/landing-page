@@ -1,4 +1,4 @@
-name: Build 13Xplay Elementor Landing Page
+name: Build 13Xplay Elementor Landing Page V2
 
 on:
   push:
@@ -16,37 +16,66 @@ jobs:
       FTP_SERVER: ${{ secrets.FTP_SERVER }}
       FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Upload temporary Elementor layout builder
+      - name: Prepare 13Xplay artwork assets
+        run: |
+          mkdir -p /tmp/x13-assets
+          curl --fail --silent --show-error \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/blobs/7f851c41d70033654cfcc67df92f78147d3c6641" \
+            | jq -r '.content' | tr -d '\n' | base64 -d > /tmp/x13-assets/13xplay-logo.webp
+          curl --fail --silent --show-error \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/blobs/bdc74f286880483934ea67b3f2cbb96845efd640" \
+            | jq -r '.content' | tr -d '\n' | base64 -d > /tmp/x13-assets/13xplay-hero.webp
+          test -s /tmp/x13-assets/13xplay-logo.webp
+          test -s /tmp/x13-assets/13xplay-hero.webp
+
+      - name: Upload branded artwork to WordPress uploads
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --upload-file "tools/x13-build-reference-layout.php" \
-            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-build-reference-layout.php"
+            --upload-file /tmp/x13-assets/13xplay-logo.webp \
+            "ftp://${FTP_SERVER}/wp-content/uploads/13xplay-assets/13xplay-logo.webp"
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file /tmp/x13-assets/13xplay-hero.webp \
+            "ftp://${FTP_SERVER}/wp-content/uploads/13xplay-assets/13xplay-hero.webp"
 
-      - name: Build and verify Elementor landing page
+      - name: Upload temporary Elementor V2 polish
+        run: |
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file "tools/x13-polish-reference-v2.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-polish-reference-v2.php"
+
+      - name: Apply V2 Elementor design
         run: |
           sleep 2
-          echo "13Xplay Elementor layout result:"
+          echo "13Xplay V2 result:"
           curl --fail --silent --show-error --location --retry 3 --max-time 60 \
-            "https://13xplay.upscaleera.com/?x13_build_reference=1&cb=${GITHUB_SHA}"
+            "https://13xplay.upscaleera.com/?x13_polish_v2=1&cb=${GITHUB_SHA}"
           echo
 
-      - name: Verify live Home contains new layout markers
+      - name: Verify live V2 markers and artwork
         run: |
           sleep 2
-          curl --fail --silent --show-error --location --retry 3 --max-time 60 \
-            "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}" \
-            | grep -E "x13-ref-header|x13-main-title|x13-main-whatsapp|x13-ref-footer" >/dev/null
-          echo "Live Home contains header, hero CTA and footer markers."
+          HTML="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}")"
+          echo "$HTML" | grep -E "x13-v2-logo|x13-v2-art|x13-v2-ready|x13-v2-bottom-strip" >/dev/null
+          curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-logo.webp" >/dev/null
+          curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-hero.webp" >/dev/null
+          echo "Reference V2 layout and branded assets verified live."
 
-      - name: Remove temporary Elementor layout builder
+      - name: Remove temporary Elementor polish file
         if: always()
         run: |
           curl --silent --show-error \
             --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
-            --quote "DELE wp-content/mu-plugins/x13-build-reference-layout.php" \
+            --quote "DELE wp-content/mu-plugins/x13-polish-reference-v2.php" \
             "ftp://${FTP_SERVER}/" > /dev/null || true
