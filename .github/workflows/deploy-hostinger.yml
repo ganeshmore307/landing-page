@@ -1,0 +1,30 @@
+name: Deploy 13Xplay to Hostinger
+
+on:
+  push:
+    branches:
+      - 13xplay-theme-sync
+
+concurrency:
+  group: deploy-13xplay-hostinger
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy 13Xplay theme to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /wp-content/themes/13xplay/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            README.md
