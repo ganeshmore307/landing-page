@@ -12,11 +12,15 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy 13Xplay theme to Hostinger
+      - name: Deploy 13Xplay theme files to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -29,15 +33,28 @@ jobs:
             **/.git*
             **/.git*/**
             **/.github/**
+            tools/**
             README.md
 
-      - name: Trigger WordPress Elementor repair
+      - name: Upload standalone Elementor repair to public_html
+        run: |
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file "tools/x13-elementor-repair.php" \
+            "ftp://${FTP_SERVER}/public_html/x13-elementor-repair.php"
+
+      - name: Execute and verify Elementor repair
         run: |
           sleep 2
-          curl --fail --silent --show-error --location --retry 3 --max-time 30 "https://13xplay.upscaleera.com/?x13-deploy-trigger=${GITHUB_SHA}" > /dev/null
-
-      - name: Verify Home Elementor data
-        run: |
-          echo "Elementor Home diagnostic:"
-          curl --fail --silent --show-error --location --retry 3 --max-time 30 "https://13xplay.upscaleera.com/?x13_diag=elementor"
+          echo "Standalone Elementor repair result:"
+          curl --fail --silent --show-error --location --retry 3 --max-time 30 \
+            "https://13xplay.upscaleera.com/x13-elementor-repair.php?token=x13-repair-28-20260814"
           echo
+
+      - name: Remove standalone repair file from Hostinger
+        if: always()
+        run: |
+          curl --silent --show-error \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --quote "DELE public_html/x13-elementor-repair.php" \
+            "ftp://${FTP_SERVER}/" > /dev/null || true
