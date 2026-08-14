@@ -1,8 +1,69 @@
 /*
 Theme Name: 13Xplay Direct
 Theme URI: https://13xplay.upscaleera.com/
-Description: Minimal WordPress shell for the direct 13Xplay front-page.php landing page.
+Description: Standalone Elementor-editable 13Xplay landing page shell.
 Author: 13Xplay
-Version: 3.0.1
+Version: 4.0.0
 Text Domain: 13xplay
 */
+
+html, body { margin: 0; background: #02070a; }
+body.x13-standalone { overflow-x: hidden; }
+.x13-page-content { min-height: 100vh; }
+.x13-page-content .elementor { min-height: 100vh; }
+
+/* Keep the native Elementor elements premium while remaining editable. */
+.x13-logo .elementor-heading-title { font-style: italic; text-shadow: 0 0 28px rgba(24,224,176,.2); }
+.x13-welcome .elementor-heading-title { text-transform: uppercase; }
+.x13-hero { position: relative; isolation: isolate; overflow: hidden; }
+.x13-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 46%, rgba(24,224,176,.18), transparent 28%),
+    linear-gradient(90deg, rgba(2,7,10,.92) 0%, rgba(2,7,10,.74) 42%, rgba(2,7,10,.38) 70%, rgba(2,7,10,.62) 100%);
+}
+.x13-hero > .e-con-inner,
+.x13-hero > .elementor-element { position: relative; z-index: 1; }
+.x13-id-title .elementor-heading-title { text-shadow: 0 10px 38px rgba(0,0,0,.55); }
+.x13-offer-badge {
+  position: relative;
+  transform: rotate(-2deg);
+  clip-path: polygon(3% 0, 92% 0, 100% 24%, 97% 100%, 8% 100%, 0 76%, 2% 20%);
+  filter: drop-shadow(0 18px 28px rgba(255,168,0,.22));
+}
+.x13-offer-badge::before,
+.x13-offer-badge::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(20,20,20,.28);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.x13-offer-badge::before { left: 12px; }
+.x13-offer-badge::after { right: 12px; }
+.x13-whatsapp .elementor-button {
+  min-width: 320px;
+  box-shadow: 0 18px 46px rgba(16,201,95,.30);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.x13-whatsapp .elementor-button:hover { transform: translateY(-2px); box-shadow: 0 22px 50px rgba(16,201,95,.38); }
+
+@media (max-width: 767px) {
+  .x13-header { min-height: 72px !important; }
+  .x13-hero::before {
+    background:
+      linear-gradient(180deg, rgba(2,7,10,.52) 0%, rgba(2,7,10,.70) 52%, rgba(2,7,10,.96) 100%),
+      radial-gradient(circle at 50% 32%, rgba(24,224,176,.14), transparent 36%);
+  }
+  .x13-offer-badge { transform: rotate(-1deg); }
+  .x13-whatsapp, .x13-whatsapp .elementor-button-wrapper, .x13-whatsapp .elementor-button { width: 100%; }
+  .x13-whatsapp .elementor-button { min-width: 0; }
+}
