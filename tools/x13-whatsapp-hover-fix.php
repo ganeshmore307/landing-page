@@ -1,7 +1,7 @@
 <?php
 /**
- * Force 13XPlay WhatsApp CTA hover text/icon color to black.
- * Keeps the existing green background/border untouched.
+ * Force 13XPlay WhatsApp CTA hover text/icon color to #15C93D.
+ * Keeps the existing button background/border untouched.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -12,9 +12,9 @@ add_action( 'wp_footer', function() {
       .x13-main-wa:hover *,
       .x13-main-wa:focus-visible,
       .x13-main-wa:focus-visible * {
-        color:#000000!important;
-        fill:#000000!important;
-        stroke:#000000!important;
+        color:#15C93D!important;
+        fill:#15C93D!important;
+        stroke:#15C93D!important;
       }
     </style>
     <?php
