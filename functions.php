@@ -101,10 +101,7 @@ add_action( 'wp_loaded', function () {
                     'id'       => '13c00002',
                     'elType'   => 'column',
                     'isInner'  => false,
-                    'settings' => [
-                        '_column_size' => 40,
-                        '_inline_size' => 40,
-                    ],
+                    'settings' => [ '_column_size' => 40, '_inline_size' => 40 ],
                     'elements' => [
                         [
                             'id'         => '13c00003',
@@ -130,10 +127,7 @@ add_action( 'wp_loaded', function () {
                     'id'       => '13c00004',
                     'elType'   => 'column',
                     'isInner'  => false,
-                    'settings' => [
-                        '_column_size' => 60,
-                        '_inline_size' => 60,
-                    ],
+                    'settings' => [ '_column_size' => 60, '_inline_size' => 60 ],
                     'elements' => [
                         [
                             'id'         => '13c00005',
@@ -164,32 +158,28 @@ add_action( 'wp_loaded', function () {
             'elType'   => 'section',
             'isInner'  => false,
             'settings' => [
-                'content_width'         => [ 'unit' => 'px', 'size' => 1180, 'sizes' => [] ],
-                'gap'                   => 'no',
-                'height'                => 'min-height',
-                'custom_height'         => x13_size( 720 ),
-                'custom_height_tablet'  => x13_size( 650 ),
-                'custom_height_mobile'  => x13_size( 680 ),
-                'background_background' => 'classic',
-                'background_image'      => [ 'url' => $game_bg, 'id' => '' ],
-                'background_position'   => 'center center',
-                'background_size'       => 'cover',
-                'background_overlay_background' => 'classic',
-                'background_overlay_color'      => 'rgba(1,7,10,0.68)',
-                'padding'               => x13_dims( 80, 34, 80, 34 ),
-                'padding_mobile'        => x13_dims( 56, 18, 80, 18 ),
-                'css_classes'           => 'x13-hero',
+                'content_width'                    => [ 'unit' => 'px', 'size' => 1180, 'sizes' => [] ],
+                'gap'                              => 'no',
+                'height'                           => 'min-height',
+                'custom_height'                    => x13_size( 720 ),
+                'custom_height_tablet'             => x13_size( 650 ),
+                'custom_height_mobile'             => x13_size( 680 ),
+                'background_background'            => 'classic',
+                'background_image'                 => [ 'url' => $game_bg, 'id' => '' ],
+                'background_position'              => 'center center',
+                'background_size'                  => 'cover',
+                'background_overlay_background'    => 'classic',
+                'background_overlay_color'         => 'rgba(1,7,10,0.68)',
+                'padding'                          => x13_dims( 80, 34, 80, 34 ),
+                'padding_mobile'                   => x13_dims( 56, 18, 80, 18 ),
+                'css_classes'                      => 'x13-hero',
             ],
             'elements' => [
                 [
                     'id'       => '13c00007',
                     'elType'   => 'column',
                     'isInner'  => false,
-                    'settings' => [
-                        '_column_size' => 100,
-                        '_inline_size' => 100,
-                        'vertical_align' => 'middle',
-                    ],
+                    'settings' => [ '_column_size' => 100, '_inline_size' => 100, 'vertical_align' => 'middle' ],
                     'elements' => [
                         [
                             'id'         => '13c00008',
@@ -239,23 +229,23 @@ add_action( 'wp_loaded', function () {
                             'widgetType' => 'heading',
                             'isInner'    => false,
                             'settings'   => [
-                                'title'                       => 'GET 10% EXTRA',
-                                'header_size'                 => 'div',
-                                'align'                       => 'center',
-                                'title_color'                 => '#111111',
-                                'background_background'       => 'classic',
-                                'background_color'            => '#FFBA18',
-                                'padding'                     => x13_dims( 18, 30, 18, 30 ),
-                                'margin'                      => x13_dims( 14, 0, 20, 0 ),
-                                'typography_typography'       => 'custom',
-                                'typography_font_family'      => 'Arial',
-                                'typography_font_size'        => x13_size( 34 ),
-                                'typography_font_size_mobile' => x13_size( 27 ),
-                                'typography_font_weight'      => '900',
-                                'css_classes'                 => 'x13-offer-badge',
-                                '_element_width'              => 'initial',
-                                '_element_custom_width'       => x13_size( 390 ),
-                                '_element_custom_width_mobile'=> x13_size( 300 ),
+                                'title'                        => 'GET 10% EXTRA',
+                                'header_size'                  => 'div',
+                                'align'                        => 'center',
+                                'title_color'                  => '#111111',
+                                'background_background'        => 'classic',
+                                'background_color'             => '#FFBA18',
+                                'padding'                      => x13_dims( 18, 30, 18, 30 ),
+                                'margin'                       => x13_dims( 14, 0, 20, 0 ),
+                                'typography_typography'        => 'custom',
+                                'typography_font_family'       => 'Arial',
+                                'typography_font_size'         => x13_size( 34 ),
+                                'typography_font_size_mobile'  => x13_size( 27 ),
+                                'typography_font_weight'       => '900',
+                                'css_classes'                  => 'x13-offer-badge',
+                                '_element_width'               => 'initial',
+                                '_element_custom_width'        => x13_size( 390 ),
+                                '_element_custom_width_mobile' => x13_size( 300 ),
                             ],
                             'elements' => [],
                         ],
@@ -278,9 +268,7 @@ add_action( 'wp_loaded', function () {
                                 'button_text_color'             => '#FFFFFF',
                                 'background_color'              => '#10C95F',
                                 'button_background_hover_color' => '#19DB70',
-                                'border_radius'                 => [
-                                    'unit' => 'px', 'top' => '14', 'right' => '14', 'bottom' => '14', 'left' => '14', 'isLinked' => true,
-                                ],
+                                'border_radius'                 => [ 'unit' => 'px', 'top' => '14', 'right' => '14', 'bottom' => '14', 'left' => '14', 'isLinked' => true ],
                                 'text_padding'                  => x13_dims( 18, 38, 18, 38 ),
                                 'typography_typography'         => 'custom',
                                 'typography_font_family'        => 'Arial',
@@ -297,7 +285,6 @@ add_action( 'wp_loaded', function () {
         ],
     ];
 
-    // Force the exact Elementor document meta on the actual Home page.
     update_post_meta( $home_id, '_elementor_edit_mode', 'builder' );
     update_post_meta( $home_id, '_elementor_template_type', 'wp-page' );
     update_post_meta( $home_id, '_elementor_version', defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.32.0' );
@@ -311,8 +298,28 @@ add_action( 'wp_loaded', function () {
     delete_post_meta( $home_id, '_elementor_page_assets' );
     clean_post_cache( $home_id );
 
-    // Ask Elementor to clear generated files if Elementor is loaded on this request.
     if ( class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->files_manager ) ) {
         \Elementor\Plugin::$instance->files_manager->clear_cache();
     }
 }, 1 );
+
+// Small deployment diagnostic: confirms whether the actual Home post contains Elementor data.
+add_action( 'template_redirect', function () {
+    if ( ! isset( $_GET['x13_diag'] ) || 'elementor' !== $_GET['x13_diag'] ) {
+        return;
+    }
+
+    $home_id = 28;
+    $raw      = get_post_meta( $home_id, '_elementor_data', true );
+    $decoded  = is_string( $raw ) ? json_decode( $raw, true ) : [];
+
+    wp_send_json( [
+        'post_id'        => $home_id,
+        'post_status'    => get_post_status( $home_id ),
+        'edit_mode'      => get_post_meta( $home_id, '_elementor_edit_mode', true ),
+        'template_type'  => get_post_meta( $home_id, '_elementor_template_type', true ),
+        'repair_version' => get_post_meta( $home_id, '_x13_repair_version', true ),
+        'root_elements'  => is_array( $decoded ) ? count( $decoded ) : 0,
+        'has_data'       => is_array( $decoded ) && ! empty( $decoded ),
+    ] );
+} );
