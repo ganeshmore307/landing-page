@@ -62,6 +62,13 @@ jobs:
             --upload-file "tools/x13-mobile-reference-polish.php" \
             "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-mobile-reference-polish.php"
 
+      - name: Upload mobile poster V2
+        run: |
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+            --upload-file "tools/x13-mobile-poster-v2.php" \
+            "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-mobile-poster-v2.php"
+
       - name: Upload larger trust strip icons
         run: |
           curl --fail --silent --show-error --ftp-create-dirs \
@@ -76,11 +83,11 @@ jobs:
             --upload-file "tools/x13-desktop-bonus-polish.php" \
             "ftp://${FTP_SERVER}/wp-content/mu-plugins/x13-desktop-bonus-polish.php"
 
-      - name: Verify premium layout and style overrides live
+      - name: Verify premium layout and mobile poster live
         run: |
           sleep 3
           HTML="$(curl --fail --silent --show-error --location --retry 3 --max-time 60 "https://13xplay.upscaleera.com/?cb=${GITHUB_SHA}")"
-          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish|x13-trust-icon-size|x13-desktop-bonus-polish" >/dev/null
+          echo "$HTML" | grep -E "x13-fixed|x13-main-wa|x13-feature-strip|x13-footer|x13-mobile-reference-polish|x13-mobile-poster-v2|x13-trust-icon-size|x13-desktop-bonus-polish" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-logo.webp" >/dev/null
           curl --fail --silent --show-error --head "https://13xplay.upscaleera.com/wp-content/uploads/13xplay-assets/13xplay-hero.webp" >/dev/null
-          echo "13Xplay landing deployed with clean desktop bonus badge and larger trust icons."
+          echo "13Xplay landing deployed with mobile poster V2 and preserved desktop layout."
