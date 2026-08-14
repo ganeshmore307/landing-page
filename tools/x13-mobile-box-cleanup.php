@@ -10,7 +10,24 @@ add_action( 'wp_head', function() {
     ?>
     <style id="x13-mobile-box-cleanup">
     @media (max-width:767px){
-      /* Give the left cards a little more usable room without touching desktop. */
+      /* Add breathing room below the header so the poster does not start too high. */
+      .x13-hero-grid{
+        min-height:96vw!important;
+        height:96vw!important;
+        max-height:470px!important;
+      }
+      .x13-mobile-art{
+        top:4vw!important;
+        bottom:auto!important;
+        height:92vw!important;
+      }
+
+      /* Move the complete mobile poster content down together. */
+      .x13-eyebrow{top:8.4vw!important}
+      .x13-copy h1{top:14.5vw!important}
+      .x13-subtitle{top:50.5vw!important}
+
+      /* Give the left cards more usable room without touching desktop. */
       .x13-mobile-id-card,
       .x13-mobile-trust-card{
         left:4vw!important;
@@ -24,8 +41,9 @@ add_action( 'wp_head', function() {
         align-items:center!important;
       }
 
-      .x13-mobile-id-card{top:58.5vw!important;min-height:12.5vw!important}
-      .x13-mobile-trust-card{top:72.5vw!important;min-height:11.7vw!important}
+      /* More visible vertical space between the two text boxes. */
+      .x13-mobile-id-card{top:63.5vw!important;min-height:12.5vw!important}
+      .x13-mobile-trust-card{top:78.5vw!important;min-height:11.7vw!important}
 
       /* Icons stay visible but no longer steal text width. */
       .x13-mobile-id-card .x13-id-icon,
@@ -88,10 +106,10 @@ add_action( 'wp_head', function() {
         font-size:1.45vw!important;
       }
 
-      /* Move badge slightly right and down so cards never collide with it. */
+      /* Bonus follows the cards downward and keeps a clean gap from them. */
       .x13-mobile-bonus{
         right:3.2vw!important;
-        top:59.5vw!important;
+        top:64.5vw!important;
         width:29vw!important;
         height:29vw!important;
       }
