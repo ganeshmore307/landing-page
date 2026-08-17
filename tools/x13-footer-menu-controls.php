@@ -1,7 +1,7 @@
 <?php
 /**
- * 13XPlay footer menu controls for the controlled Elementor landing widget.
- * Adds editable footer quick-link labels/URLs without changing the fixed layout.
+ * 13XPlay footer menu + address controls for the controlled Elementor landing widget.
+ * Adds editable footer quick-link labels/URLs and a footer address without changing the fixed layout.
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -69,6 +69,17 @@ add_action( 'elementor/element/x13play_controlled_landing/footer_section/before_
         'default' => [ 'url' => home_url( '/privacy-policy/' ) ],
         'show_external' => false,
     ] );
+
+    $element->add_control( 'footer_address_divider', [
+        'type' => \Elementor\Controls_Manager::DIVIDER,
+    ] );
+    $element->add_control( 'footer_address', [
+        'label' => 'Footer Address',
+        'type' => \Elementor\Controls_Manager::TEXTAREA,
+        'default' => '2nd Floor, SCO 45, Sector 17, Gurugram, Haryana – 122001, India.',
+        'rows' => 3,
+        'label_block' => true,
+    ] );
 }, 10, 2 );
 
 add_filter( 'elementor/widget/render_content', function( $content, $widget ) {
@@ -108,5 +119,23 @@ add_filter( 'elementor/widget/render_content', function( $content, $widget ) {
     $menu .= '</div>';
 
     $updated = preg_replace( '~<div class="x13-footer-links">.*?</div>~s', $menu, $content, 1 );
-    return is_string( $updated ) && '' !== $updated ? $updated : $content;
+    if ( ! is_string( $updated ) || '' === $updated ) {
+        $updated = $content;
+    }
+
+    $address = isset( $s['footer_address'] ) && '' !== trim( (string) $s['footer_address'] )
+        ? trim( (string) $s['footer_address'] )
+        : '2nd Floor, SCO 45, Sector 17, Gurugram, Haryana – 122001, India.';
+
+    $address_html = '<p class="x13-footer-address"><strong>Address:</strong> ' . esc_html( $address ) . '</p>';
+    $updated = preg_replace(
+        '~(<div class="x13-footer-support"><h3>.*?</h3><p>WhatsApp:.*?</p>)~s',
+        '$1' . $address_html,
+        $updated,
+        1
+    );
+
+    $updated .= '<style id="x13-footer-address-style">.x13-footer-address{max-width:360px;line-height:1.55!important;margin-top:12px!important;color:#cbd8d4!important}.x13-footer-address strong{color:#fff!important}@media(max-width:767px){.x13-footer-address{max-width:82vw;margin-left:auto!important;margin-right:auto!important;text-align:center!important}}</style>';
+
+    return $updated;
 }, 20, 2 );
